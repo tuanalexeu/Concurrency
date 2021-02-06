@@ -1,8 +1,14 @@
 package com.company;
 
+import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Safelock {
     static class Friend {
+
         private final String name;
+
         private final Lock lock = new ReentrantLock();
 
         public Friend(String name) {
@@ -20,7 +26,7 @@ public class Safelock {
                 myLock = lock.tryLock();
                 yourLock = bower.lock.tryLock();
             } finally {
-                if (! (myLock && yourLock)) {
+                if (!(myLock && yourLock)) {
                     if (myLock) {
                         lock.unlock();
                     }
@@ -81,10 +87,9 @@ public class Safelock {
             
 
     public static void main(String[] args) {
-        final Friend alphonse =
-            new Friend("Alphonse");
-        final Friend gaston =
-            new Friend("Gaston");
+        final Friend alphonse = new Friend("Alphonse");
+        final Friend gaston = new Friend("Gaston");
+
         new Thread(new BowLoop(alphonse, gaston)).start();
         new Thread(new BowLoop(gaston, alphonse)).start();
     }
